@@ -6,12 +6,54 @@
 // Rounded bonus and salary to the nearest whole dollar
 
 
-var arrayAtticus = ["Atticus", "2405", "47000", 3];
-var arrayJem = ["Jem", "62347", "63500", 4];
-var arrayBoo = ["Boo", "11435", "54000", 3];
-var arrayScout = ["Scout", "6243", "74750", 5];
+function hire(emp) {
+    this.name=emp[0];
+    this.id=emp[1];
+    this.salary=emp[2];
+    this.rating=emp[3];
+}
 
-var array = [arrayAtticus, arrayJem, arrayBoo, arrayScout];
+var atticus = {
+    name:   "Atticus", 
+    id:     "2405", 
+    salary: "47000", 
+    rating: 3
+};
+var jem = {
+    name:   "Jem",
+    id:     "62347",
+    salary: "63500", 
+    rating:  4
+};
+var boo = {
+    name:"Boo", 
+    id:"11435", 
+    salary:"54000", 
+    rating:3
+};
+var scout = {
+    name:"Scout", 
+    id:"6243", 
+    salary:"74750", 
+    rating:5};
+
+//var array = [arrayAtticus, arrayJem, arrayBoo, arrayScout];
+
+
+//
+//var atticus = {};
+//var jem     = {};
+//var boo    = {};
+//var scout  = {};
+//
+//atticus = hire(arrayAtticus);
+//jem     = hire(arrayJem);
+//boo     = hire(arrayBoo);
+//scout   = hire(arrayScout);
+
+array = [atticus, jem, boo, scout];
+
+console.log("dudes: "+array);
 
 //Create variables used to write to the DOM
 var newEl, newText, position;
@@ -23,32 +65,33 @@ position = document.getElementById('content');
 for(var i = 0; i < array.length; i++){
 	array[i] = calculateSTI(array[i]);
  	newEl = document.createElement('li');
-    //var textInfo =  prettyText(array[i]);
-    newText = document.createTextNode(array[i].join(", "));
+    var textInfo =  prettyText(array[i]);
+    newText = document.createTextNode(textInfo);
 	newEl.appendChild(newText);
 	position.appendChild(newEl);
 }
 //
-//function prettyText(arr) {
-//    var text = '';
-//    for (var i=0;i<arr.length;i++) {
-//        console.log('text1:'+text);
-//        if (i!=0) 
-//            text += ", ";
-//        
-//        text += arr[i];
-//        console.log('text2:'+text);
-//    }
-//    return text;
-//}
+function prettyText(arr) {
+    var text = '';
+    for (var key in arr) {
+        console.log('text1:'+text);
+        if (key!='name') 
+            text += ", ";
+        
+        text += arr[key];
+        console.log('text2:'+text);
+    }
+    return text;
+}
 
-function calculateSTI(array){
-  var newArray = [];
+function calculateSTI(emp){
+  var newObj = {};
 
-  newArray[0] = array[0];
-  var employeeNumber = array[1];
-  var baseSalary = parseInt(array[2]);
-  var reviewScore = array[3];
+  newObj.name = emp.name;
+  var employeeNumber = emp.id;
+  var baseSalary = parseInt(emp.salary);
+  var reviewScore = emp.rating;
+    console.log(employeeNumber+"|"+baseSalary+"|"+reviewScore);
 //console.log("calcSTI: Emp#"+employeeNumber+"|baseSal:"+baseSalary+"|rate:"+reviewScore);
   var bonus = getBaseSTI(reviewScore) + getYearAdjustment(employeeNumber) - getIncomeAdjustment(baseSalary);
   if(bonus > 0.13){
@@ -57,11 +100,11 @@ function calculateSTI(array){
     bonus = 0;
   }
 
-  newArray[1] = bonus;
-  newArray[2] = Math.round(baseSalary * (1.0 + bonus));
-  newArray[3] = Math.round(baseSalary * bonus);
-  console.log(newArray[0] + " " + newArray[1] + " " + newArray[2] + " " + newArray[3]);
-  return newArray;
+  newObj.bonusPct = bonus;
+  newObj.totalAnnualCompensation = Math.round(baseSalary * (1.0 + bonus));
+  newObj.bonusDol = Math.round(baseSalary * bonus);
+  //console.log(newArray[0] + " " + newArray[1] + " " + newArray[2] + " " + newArray[3]);
+  return newObj;
 }
 
 function getBaseSTI(reviewScore){
