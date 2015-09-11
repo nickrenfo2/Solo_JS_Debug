@@ -23,25 +23,24 @@ position = document.getElementById('content');
 for(var i = 0; i < array.length; i++){
 	array[i] = calculateSTI(array[i]);
  	newEl = document.createElement('li');
-    var textInfo =  prettyText(array[i]);
-    newText = document.createTextNode(textInfo);
+    //var textInfo =  prettyText(array[i]);
+    newText = document.createTextNode(array[i].join(", "));
 	newEl.appendChild(newText);
 	position.appendChild(newEl);
 }
-
-function prettyText(arr) {
-    var text = '';
-    var textclass = '';
-    for (var i=0;i<arr.length;i++) {
-        console.log('text1:'+text);
-        if (i!=0) 
-            text += ", ";
-        
-        text += arr[i];
-        console.log('text2:'+text);
-    }
-    return text;
-}
+//
+//function prettyText(arr) {
+//    var text = '';
+//    for (var i=0;i<arr.length;i++) {
+//        console.log('text1:'+text);
+//        if (i!=0) 
+//            text += ", ";
+//        
+//        text += arr[i];
+//        console.log('text2:'+text);
+//    }
+//    return text;
+//}
 
 function calculateSTI(array){
   var newArray = [];

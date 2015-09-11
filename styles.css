@@ -4,6 +4,9 @@ ul {
     margin: 0px;
 }
 
-li {
-    
+li:nth-child(even) {
+    color:darkgray;
+}
+li:nth-child(odd) {
+    color:darkslategray;
 }
